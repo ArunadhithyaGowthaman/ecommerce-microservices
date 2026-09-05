@@ -1,0 +1,6 @@
+route:
+  receiver: 'default-logger'
+
+receivers:
+  - name: 'default-logger'
+    # no real webhook yet — Module 4 replaces this with your FastAPI pipeline receiver
