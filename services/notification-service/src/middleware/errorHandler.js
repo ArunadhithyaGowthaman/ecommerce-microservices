@@ -1,8 +1,13 @@
+const logger = require('../logger');
+
 const errorHandler = (err, req, res, next) => {
-  console.error('[Notification Service] Error:', err.message);
-  res.status(err.statusCode || 500).json({
+  logger.error(err.message, { stack: err.stack });
+
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: err.message || 'Internal Server Error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 };
 

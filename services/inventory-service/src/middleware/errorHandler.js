@@ -1,5 +1,7 @@
+const logger = require('../logger');
+
 const errorHandler = (err, req, res, next) => {
-  console.error('[Inventory Service] Error:', err.message);
+  logger.error(err.message, { stack: err.stack });
 
   const statusCode = err.statusCode || 500;
   res.status(statusCode).json({

@@ -16,3 +16,11 @@ groups:
           severity: warning
         annotations:
           summary: "P99 latency above 2s on {{ $labels.service }}"
+
+      - alert: ServiceDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.service }} is down"
