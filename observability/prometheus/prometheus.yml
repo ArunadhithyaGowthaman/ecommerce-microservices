@@ -1,6 +1,9 @@
 global:
-  scrape_interval: 10s
-  evaluation_interval: 10s
+  scrape_interval: 5s
+  scrape_timeout: 4s
+  evaluation_interval: 5s
+  external_labels:
+    cluster: harness
 
 rule_files:
   - /etc/prometheus/rules.yml
