@@ -1,13 +1,14 @@
 const { v4: uuidv4 } = require('uuid');
 const Notification = require('../models/Notification');
+const logger = require('../../logger');
 
 const simulateEmailSend = async (userId, message) => {
-  console.log('========================================');
-  console.log('[EMAIL SIMULATION]');
-  console.log(`To: user-${userId}@example.com`);
-  console.log(`Subject: E-Commerce Notification`);
-  console.log(`Body: ${message}`);
-  console.log('========================================');
+  logger.info('========================================');
+  logger.info('[EMAIL SIMULATION]');
+  logger.info(`To: user-${userId}@example.com`);
+  logger.info(`Subject: E-Commerce Notification`);
+  logger.info(`Body: ${message}`);
+  logger.info('========================================');
   return true;
 };
 

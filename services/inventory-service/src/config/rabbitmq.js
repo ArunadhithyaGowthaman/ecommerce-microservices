@@ -1,4 +1,5 @@
 const amqp = require('amqplib');
+const logger = require('../../logger');
 
 let channel = null;
 let connection = null;
@@ -22,14 +23,14 @@ const connectRabbitMQ = async () => {
         await handlePaymentCompleted(event);
         channel.ack(msg);
       } catch (error) {
-        console.error('[Inventory Service] Error processing message:', error.message);
+        logger.error('[Inventory Service] Error processing message', { error: error.message });
         channel.nack(msg, false, false);
       }
     });
 
-    console.log('[Inventory Service] RabbitMQ connected and listening for payment.completed');
+    logger.info('[Inventory Service] RabbitMQ connected and listening for payment.completed');
   } catch (error) {
-    console.error('[Inventory Service] RabbitMQ connection error:', error.message);
+    logger.error('[Inventory Service] RabbitMQ connection error', { error: error.message });
   }
 };
 

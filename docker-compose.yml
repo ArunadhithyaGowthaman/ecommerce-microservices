@@ -62,24 +62,24 @@ services:
 
   # ==================== MESSAGE BROKER ====================
   rabbitmq:
-  image: rabbitmq:3-management-alpine
-  container_name: rabbitmq
-  ports:
-    - "5672:5672"
-    - "15672:15672"
-  environment:
-    RABBITMQ_DEFAULT_USER: guest
-    RABBITMQ_DEFAULT_PASS: guest
-    RABBITMQ_LOOPBACK_USERS: "none"
-  volumes:
-    - rabbitmq_data:/var/lib/rabbitmq
-  networks:
-    - ecommerce-network
-  healthcheck:
-    test: rabbitmq-diagnostics -q ping
-    interval: 10s
-    timeout: 5s
-    retries: 5
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_LOOPBACK_USERS: "none"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - ecommerce-network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # ==================== MICROSERVICES ====================
   inventory-service:

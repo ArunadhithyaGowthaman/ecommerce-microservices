@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const Product = require('../models/Product');
+const logger = require('../../logger');
 
 const seedProducts = async () => {
   const count = await Product.countDocuments();
@@ -15,7 +16,7 @@ const seedProducts = async () => {
   ];
 
   await Product.insertMany(products);
-  console.log('[Inventory Service] Sample products seeded');
+  logger.info('[Inventory Service] Sample products seeded');
 };
 
 const getAllProducts = async () => {
@@ -82,11 +83,11 @@ const updateStock = async (productId, quantity) => {
 
 const handlePaymentCompleted = async (event) => {
   const { orderId, products } = event;
-  console.log(`[Inventory Service] Reducing stock for order ${orderId}`);
+  logger.info(`[Inventory Service] Reducing stock for order ${orderId}`);
 
   for (const item of products) {
     await updateStock(item.productId, item.quantity);
-    console.log(`[Inventory Service] Reduced ${item.quantity} units of ${item.productId}`);
+    logger.info(`[Inventory Service] Reduced ${item.quantity} units of ${item.productId}`);
   }
 };
 

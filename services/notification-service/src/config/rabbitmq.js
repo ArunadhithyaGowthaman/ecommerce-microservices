@@ -1,5 +1,6 @@
 const amqp = require('amqplib');
 const notificationService = require('../services/notification.service');
+const logger = require('../../logger');
 
 const EXCHANGE = 'ecommerce.events';
 
@@ -23,19 +24,19 @@ const connectRabbitMQ = async () => {
         if (!msg) return;
         try {
           const data = JSON.parse(msg.content.toString());
-          console.log(`[Notification Service] Received ${data.eventType || event.routingKey}`);
+          logger.info(`[Notification Service] Received ${data.eventType || event.routingKey}`);
           await event.handler(data);
           channel.ack(msg);
         } catch (error) {
-          console.error(`[Notification Service] Error processing ${event.routingKey}:`, error.message);
+          logger.error(`[Notification Service] Error processing ${event.routingKey}`, { error: error.message });
           channel.nack(msg, false, false);
         }
       });
     }
 
-    console.log('[Notification Service] RabbitMQ consumer started for all events');
+    logger.info('[Notification Service] RabbitMQ consumer started for all events');
   } catch (error) {
-    console.error('[Notification Service] RabbitMQ connection error:', error.message);
+    logger.error('[Notification Service] RabbitMQ connection error', { error: error.message });
   }
 };
 
